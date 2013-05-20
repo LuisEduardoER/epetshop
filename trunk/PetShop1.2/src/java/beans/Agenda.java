@@ -47,6 +47,9 @@ public class Agenda implements Serializable {
     
     @Temporal(TemporalType.TIME)
     private Date hora;
+    
+    @Temporal(TemporalType.TIME)
+    private Date horaFim;
 
     public Integer getId() {
         return id;
@@ -86,6 +89,14 @@ public class Agenda implements Serializable {
 
     public void setHora(Date hora) {
         this.hora = hora;
+    }
+
+    public Date getHoraFim() {
+        return horaFim;
+    }
+
+    public void setHoraFim(Date horaFim) {
+        this.horaFim = horaFim;
     }
     
 }
