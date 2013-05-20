@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this template, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets"
+                template="../../../resources/templates/login.xhtml"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:sec="http://www.springframework.org/security/facelets/tags" >
+
+    <ui:define name="corpo">
+        <h:form>
+            <p:fieldset legend="Cadastro Funcionario">
+                <p:panelGrid columns="2">
+                    <p:panelGrid columns="2">
+                        <h:outputLabel value="Nome" for="nome"/>
+                        <p:inputText   value="" id="nome"/>                
+                        <h:outputLabel value="Login" for="login"/>
+                        <p:inputText   value="" id="login"/>                
+                        <p:outputLabel value="Telefone" for="telefone"/>
+                        <p:inputText   value="" id="telefone"/>                            
+                        <p:outputLabel value="Endereco" for="endereco"/>
+                        <p:inputText   value="" id="endereco"/>                
+                        <p:outputLabel value="Numero" for="numero"/>
+                        <p:inputText value="" id="numero"/>
+                    </p:panelGrid>
+                    <p:panelGrid columns="2">                        
+                        <p:outputLabel value="Complemento" for="complemento"/>
+                        <p:inputText   value="" id="complemento"/>
+                        <p:outputLabel value="Bairro" for="bairro"/>
+                        <p:inputText   value="" id="bairro"/>
+                        <p:outputLabel value="Cidade" for="cidade"/>
+                        <p:inputText   value="" id="cidade"/>
+                        <p:outputLabel value="Status" for="status"/>
+                        <p:selectOneRadio value="" id="status">
+                            <f:selectItem itemLabel="Ativo"/>
+                            <f:selectItem itemLabel="Desativado"/>
+                        </p:selectOneRadio> 
+                        <p:outputLabel value="Email"  for="email"/>
+                        <p:inputText   value="" id="email"/>
+                    </p:panelGrid>
+
+                </p:panelGrid>
+            </p:fieldset>
+            
+            <p:fieldset legend="Funcionarios">
+                <p:dataTable id="dataTableFuncionario" value="">
+                    <p:column headerText="Nome">
+                        <h:outputText value=""/>
+                    </p:column>
+                    <p:column headerText="Login">
+                        <h:outputText value=""/>
+                    </p:column>
+                    <p:column headerText="Telefone">
+                        <h:outputText value=""/>
+                    </p:column>                    
+                    <p:column headerText="Endereco">
+                        <h:outputText value=""/>
+                    </p:column>
+                    <p:column headerText="Numero">
+                        <h:outputText value=""/>
+                    </p:column>
+                    <p:column headerText="Complemento">
+                        <h:outputText value=""/>
+                    </p:column>
+                    <p:column headerText="Bairro">
+                        <h:outputText value=""/>
+                    </p:column>
+                    <p:column headerText="Cidade">
+                        <h:outputText value=""/>
+                    </p:column>
+                    <p:column headerText="Estado">
+                        <h:outputText value=""/>
+                    </p:column>
+                    <p:column headerText="Status">
+                        <h:outputText value=""/>
+                    </p:column>
+                    <p:column headerText="Email">
+                        <h:outputText value=""/>
+                    </p:column>
+                    <p:column headerText="Data Cadastro">
+                        <h:outputText value=""/>
+                    </p:column>
+                    <p:column headerText="Opções">
+                        <p:commandButton value="Excluir"/>
+                        <p:commandButton value="Editar" onclick="dialogFuncionario.show();"/>
+                    </p:column>
+                </p:dataTable>
+            </p:fieldset>
+            
+            
+            
+            <p:dialog id="dialogFuncionario" widgetVar="dialogFuncionario" >
+                <p:fieldset legend="Cadastro Funcionario">
+                <p:panelGrid columns="2">
+                    <p:panelGrid columns="2">
+                        <h:outputLabel value="Nome" for="nome"/>
+                        <p:inputText   value="" id="nome"/>                
+                        <h:outputLabel value="Login" for="login"/>
+                        <p:inputText   value="" id="login"/>                
+                        <p:outputLabel value="Telefone" for="telefone"/>
+                        <p:inputText   value="" id="telefone"/>                            
+                        <p:outputLabel value="Endereco" for="endereco"/>
+                        <p:inputText   value="" id="endereco"/>                
+                        <p:outputLabel value="Numero" for="numero"/>
+                        <p:inputText value="" id="numero"/>
+                    </p:panelGrid>
+                    <p:panelGrid columns="2">                        
+                        <p:outputLabel value="Complemento" for="complemento"/>
+                        <p:inputText   value="" id="complemento"/>
+                        <p:outputLabel value="Bairro" for="bairro"/>
+                        <p:inputText   value="" id="bairro"/>
+                        <p:outputLabel value="Cidade" for="cidade"/>
+                        <p:inputText   value="" id="cidade"/>
+                        <p:outputLabel value="Status" for="status"/>
+                        <p:selectOneRadio value="" id="status">
+                            <f:selectItem itemLabel="Ativo"/>
+                            <f:selectItem itemLabel="Desativado"/>
+                        </p:selectOneRadio> 
+                        <p:outputLabel value="Email"  for="email"/>
+                        <p:inputText   value="" id="email"/>
+                    </p:panelGrid>
+
+                </p:panelGrid>
+            </p:fieldset>
+            </p:dialog>
+            
+        </h:form>
+    </ui:define>
+
+</ui:composition>
