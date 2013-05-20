@@ -12,77 +12,88 @@ and open the template in the editor.
                 xmlns:sec="http://www.springframework.org/security/facelets/tags" >
 
     <ui:define name="corpo">
+        <style type="text/css">
+            .semBorda tr, .semBorda td {  
+                border: none !important;  
+            }
+        </style>
         <h:form>
+            <p:growl id="growl"/>
             <p:fieldset legend="Cadastro Funcionario">
-                <p:panelGrid columns="2">
+                <p:panelGrid columns="2" styleClass="semBorda">
                     <p:panelGrid columns="2">
                         <h:outputLabel value="Nome" for="nome"/>
-                        <p:inputText   value="" id="nome"/>                
+                        <p:inputText   value="#{ControllerFuncionario.funcionario.nome}" id="nome"/>                
                         <h:outputLabel value="Login" for="login"/>
-                        <p:inputText   value="" id="login"/>                
+                        <p:inputText   value="#{ControllerFuncionario.funcionario.login}" id="login"/>                
                         <p:outputLabel value="Telefone" for="telefone"/>
-                        <p:inputText   value="" id="telefone"/>                            
+                        <p:inputMask mask="(999)-9999-9999"   value="#{ControllerFuncionario.funcionario.contato}" id="telefone"/>                            
                         <p:outputLabel value="Endereco" for="endereco"/>
-                        <p:inputText   value="" id="endereco"/>                
+                        <p:inputText   value="#{ControllerFuncionario.funcionario.endereco}" id="endereco"/>                
                         <p:outputLabel value="Numero" for="numero"/>
-                        <p:inputText value="" id="numero"/>
+                        <p:inputText   value="#{ControllerFuncionario.funcionario.numero}" id="numero"/>
                     </p:panelGrid>
                     <p:panelGrid columns="2">                        
                         <p:outputLabel value="Complemento" for="complemento"/>
-                        <p:inputText   value="" id="complemento"/>
+                        <p:inputText   value="#{ControllerFuncionario.funcionario.complemento}" id="complemento"/>
                         <p:outputLabel value="Bairro" for="bairro"/>
-                        <p:inputText   value="" id="bairro"/>
+                        <p:inputText   value="#{ControllerFuncionario.funcionario.bairro}" id="bairro"/>
                         <p:outputLabel value="Cidade" for="cidade"/>
-                        <p:inputText   value="" id="cidade"/>
+                        <p:inputText   value="#{ControllerFuncionario.funcionario.cidade}" id="cidade"/>
                         <p:outputLabel value="Status" for="status"/>
-                        <p:selectOneRadio value="" id="status">
-                            <f:selectItem itemLabel="Ativo"/>
-                            <f:selectItem itemLabel="Desativado"/>
+                        <p:selectOneRadio value="#{ControllerFuncionario.funcionario.ativo}" id="status">
+                            <f:selectItem itemLabel="Ativo" itemValue="#{ControllerFuncionario.statusTrue}"/>
+                            <f:selectItem itemLabel="Desativado" itemValue="#{ControllerFuncionario.statusFalse}"/>
                         </p:selectOneRadio> 
                         <p:outputLabel value="Email"  for="email"/>
-                        <p:inputText   value="" id="email"/>
+                        <p:inputText   value="#{ControllerFuncionario.funcionario.email}" id="email"/>
                     </p:panelGrid>
-
+                    
                 </p:panelGrid>
+                
+                <p:commandButton value="Cadastrar" actionListener="#{controllerUsuario.salvarUsuario()}" update="growl dataTableFuncionario" />
+                
             </p:fieldset>
             
-            <p:fieldset legend="Funcionarios">
-                <p:dataTable id="dataTableFuncionario" value="">
+            <p:fieldset legend="Funcionarios" rendered=" #{ControllerFuncionario.listaDataModel == null}">
+                <p:dataTable id="dataTableFuncionario" value="#{ControllerFuncionario.listaDM}" var="fun">
                     <p:column headerText="Nome">
-                        <h:outputText value=""/>
+                        <h:outputText value="#{fun.nome}"/>
                     </p:column>
                     <p:column headerText="Login">
-                        <h:outputText value=""/>
+                        <h:outputText value="#{fun.login}"/>
                     </p:column>
                     <p:column headerText="Telefone">
-                        <h:outputText value=""/>
+                        <h:outputText value="#{fun.contato}"/>
                     </p:column>                    
                     <p:column headerText="Endereco">
-                        <h:outputText value=""/>
+                        <h:outputText value="#{fun.contato}"/>
                     </p:column>
                     <p:column headerText="Numero">
-                        <h:outputText value=""/>
+                        <h:outputText value="#{fun.numero}"/>
                     </p:column>
                     <p:column headerText="Complemento">
-                        <h:outputText value=""/>
+                        <h:outputText value="#{fun.complemento}"/>
                     </p:column>
                     <p:column headerText="Bairro">
-                        <h:outputText value=""/>
+                        <h:outputText value="#{fun.bairro}"/>
                     </p:column>
                     <p:column headerText="Cidade">
-                        <h:outputText value=""/>
+                        <h:outputText value="#{fun.cidade}"/>
                     </p:column>
                     <p:column headerText="Estado">
-                        <h:outputText value=""/>
+                        <h:outputText value="#{fun.estado}"/>
                     </p:column>
                     <p:column headerText="Status">
-                        <h:outputText value=""/>
+                        <h:outputText value="#{fun.status}"/>
                     </p:column>
                     <p:column headerText="Email">
-                        <h:outputText value=""/>
+                        <h:outputText value="#{fun.email}"/>
                     </p:column>
                     <p:column headerText="Data Cadastro">
-                        <h:outputText value=""/>
+                        <h:outputText value="#{fun.datacadastro}" >
+                            <f:convertDateTime pattern="dd/MM/yyyy"/>
+                        </h:outputText>
                     </p:column>
                     <p:column headerText="Opções">
                         <p:commandButton value="Excluir"/>
@@ -90,40 +101,40 @@ and open the template in the editor.
                     </p:column>
                 </p:dataTable>
             </p:fieldset>
+        </h:form>
             
-            
-            
-            <p:dialog id="dialogFuncionario" widgetVar="dialogFuncionario" >
-                <p:fieldset legend="Cadastro Funcionario">
-                <p:panelGrid columns="2">
+            <h:form id="fomrEditarFuncionario">
+            <p:dialog id="dialogFuncionario" widgetVar="dialogFuncionario" >                
+                <p:fieldset legend="Cadastro Funcionario" >
+                    <p:panelGrid columns="2" styleClass="semBorda">
                     <p:panelGrid columns="2">
                         <h:outputLabel value="Nome" for="nome"/>
-                        <p:inputText   value="" id="nome"/>                
+                        <p:inputText   value="#{ControllerFuncionario.funcionario.nome}" id="nome"/>                
                         <h:outputLabel value="Login" for="login"/>
-                        <p:inputText   value="" id="login"/>                
+                        <p:inputText   value="#{ControllerFuncionario.funcionario.login}" id="login"/>                
                         <p:outputLabel value="Telefone" for="telefone"/>
-                        <p:inputText   value="" id="telefone"/>                            
+                        <p:inputMask mask="(999)-9999-9999"   value="#{ControllerFuncionario.funcionario.contato}" id="telefone"/>                            
                         <p:outputLabel value="Endereco" for="endereco"/>
-                        <p:inputText   value="" id="endereco"/>                
+                        <p:inputText   value="#{ControllerFuncionario.funcionario.endereco}" id="endereco"/>                
                         <p:outputLabel value="Numero" for="numero"/>
-                        <p:inputText value="" id="numero"/>
+                        <p:inputText   value="#{ControllerFuncionario.funcionario.numero}" id="numero"/>
                     </p:panelGrid>
                     <p:panelGrid columns="2">                        
                         <p:outputLabel value="Complemento" for="complemento"/>
-                        <p:inputText   value="" id="complemento"/>
+                        <p:inputText   value="#{ControllerFuncionario.funcionario.complemento}" id="complemento"/>
                         <p:outputLabel value="Bairro" for="bairro"/>
-                        <p:inputText   value="" id="bairro"/>
+                        <p:inputText   value="#{ControllerFuncionario.funcionario.bairro}" id="bairro"/>
                         <p:outputLabel value="Cidade" for="cidade"/>
-                        <p:inputText   value="" id="cidade"/>
+                        <p:inputText   value="#{ControllerFuncionario.funcionario.cidade}" id="cidade"/>
                         <p:outputLabel value="Status" for="status"/>
-                        <p:selectOneRadio value="" id="status">
-                            <f:selectItem itemLabel="Ativo"/>
-                            <f:selectItem itemLabel="Desativado"/>
+                        <p:selectOneRadio value="#{ControllerFuncionario.funcionario.ativo}" id="status">
+                            <f:selectItem itemLabel="Ativo" itemValue="#{ControllerFuncionario.statusTrue}"/>
+                            <f:selectItem itemLabel="Desativado" itemValue="#{ControllerFuncionario.statusFalse}"/>
                         </p:selectOneRadio> 
                         <p:outputLabel value="Email"  for="email"/>
-                        <p:inputText   value="" id="email"/>
+                        <p:inputText   value="#{ControllerFuncionario.funcionario.email}" id="email"/>
                     </p:panelGrid>
-
+                    
                 </p:panelGrid>
             </p:fieldset>
             </p:dialog>
