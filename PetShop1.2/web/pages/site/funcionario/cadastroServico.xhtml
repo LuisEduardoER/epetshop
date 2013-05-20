@@ -1,24 +1,37 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets"
-                template="../../../resources/templates/login.xhtml"
+<ui:composition template="../../../resources/templates/login.xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns="http://www.w3.org/1999/xhtml"
                 xmlns:p="http://primefaces.org/ui"
                 xmlns:h="http://java.sun.com/jsf/html"
                 xmlns:f="http://java.sun.com/jsf/core"
                 xmlns:sec="http://www.springframework.org/security/facelets/tags" >
 
 
+    <ui:define name="menu_horizontal">
+        <sec:ifAnyGranted roles="ROLE_ADMIN,ROLE_FUNC">
+            <ui:include src="/pages/site/funcionario/menu.xhtml" />
+        </sec:ifAnyGranted>
+    </ui:define>
+    
     <ui:define name="corpo">
+        <style type="text/css">
+            .semBorda tr, .semBorda td {  
+                border: none !important;  
+            }
+        </style>
         <sec:ifAnyGranted roles="ROLE_ADMIN,ROLE_FUNC">
             <p:growl  autoUpdate="true" />
             <h:form id="formCadastroServico">
+                <br/>
                 <p:fieldset legend="Cadastro de Serviços">
 
-                    <p:panelGrid columns="2">
-                        <p:outputLabel value="Descrição" for="descricao"/>
+                    <p:panelGrid columns="2" styleClass="semBorda">
+                        <p:outputLabel value="Descrição *" for="descricao"/>
                         <p:inputText id="descricao"  value="#{controllerServico.servico.tipo}"/>
 
-                        <p:outputLabel value="Valor" for="valor"/>
+                        <p:outputLabel value="Valor *" for="valor"/>
                         <p:inputText value="#{controllerServico.servico.preco}" id="valor"/>
                     </p:panelGrid>
                     <br/>
@@ -33,20 +46,20 @@
                             <h:outputText  value="#{p.tipo}"/>
                         </p:column>
                         <p:column headerText="Preço" filterBy="#{p.preco}">
-                            <h:outputText  value="#{p.preco}"/>
+                            <h:outputText  value="R$ #{p.preco}"/>
                         </p:column>
                         <p:column headerText="Opções" style="width: 200px;">
                             <p:commandButton value="Excluir" actionListener="#{controllerServico.remover()}" update="@form"/>
-                            <p:commandButton value="Editar" actionListener="#{controllerServico.prepararAlterar()}" update="formDialogServico" onclick="dialogServico.show();"/>
+                            <p:commandButton value="Editar" actionListener="#{controllerServico.prepararAlterar()}" update=":formDialogServico:fsalterar" onclick="dialogServico.show();"/>
                         </p:column>
                     </p:dataTable>                  
                 </p:fieldset>
             </h:form>
 
             <h:form id="formDialogServico">
-                <p:dialog id="dialogServico" widgetVar="dialogServico" >
+                <p:dialog id="dialogServico" widgetVar="dialogServico" closable="false" modal="true">
 
-                    <p:fieldset legend="Editar Serviços">
+                    <p:fieldset legend="Editar Serviços" id="fsalterar">
 
                         <p:panelGrid columns="2">
                             <p:outputLabel value="Descrição" for="descricao"/>
@@ -56,7 +69,8 @@
                             <p:inputText value="#{controllerServico.servico.preco}" id="valor"/>
                         </p:panelGrid>
                         <br/>
-                        <p:commandButton value="Alterar" actionListener="#{controllerServico.alterar()}" update="formCadastroServico" oncomplete="dialogServico.hide();"/>
+                        <p:commandButton value="Alterar" actionListener="#{controllerServico.alterar()}" update=":formCadastroServico" oncomplete="dialogServico.hide();"/>
+                        <p:commandButton value="Fechar" actionListener="#{controllerServico.limpar()}" oncomplete="dialogServico.hide();" update="@form"/>
 
                     </p:fieldset>
 
