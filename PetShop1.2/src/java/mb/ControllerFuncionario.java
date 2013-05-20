@@ -4,6 +4,7 @@
  */
 package mb;
 
+import beans.Servico;
 import beans.Usuario;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
@@ -26,8 +27,7 @@ public class ControllerFuncionario {
     private DataModel listaDataModel;
     @ManagedProperty(value="#{usuario}")
     private Usuario funcionario;
-    private boolean statusFalse;
-    private boolean statusTrue;
+    
     
     
     public ControllerFuncionario() {
@@ -42,12 +42,34 @@ public class ControllerFuncionario {
         FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Funcionario Cadastrado"));
     }
     
+    
+    public void excluir(){
+        UsuarioRN rn = new UsuarioRN();
+        rn.excluir(this.funcionario);
+        FacesContext context = FacesContext.getCurrentInstance();          
+        context.addMessage(null, new FacesMessage("Excluído com Sucesso"));
+    }
+    
+    
+    public void editar(){
+        UsuarioRN rn = new UsuarioRN();
+        rn.atualizar(this.funcionario);
+        FacesContext context = FacesContext.getCurrentInstance();          
+        context.addMessage(null, new FacesMessage("Editado com Sucesso"));
+    }
+    
     public DataModel getListaDM(){
         UsuarioRN rn = new UsuarioRN();
         this.listaDataModel = new ListDataModel(rn.listar());
         return listaDataModel;
     }
 
+    
+    public void prepararAlterar() {
+        this.funcionario = (Usuario) this.listaDataModel.getRowData();
+    }
+    
+    
     public DataModel getListaDataModel() {        
         return listaDataModel;
     }
@@ -67,21 +89,7 @@ public class ControllerFuncionario {
         this.funcionario = funcionario;
     }
 
-    public boolean isStatusFalse() {
-        return statusFalse;
-    }
-
-    public void setStatusFalse(boolean statusFalse) {
-        this.statusFalse = statusFalse;
-    }
-
-    public boolean isStatusTrue() {
-        return statusTrue;
-    }
-
-    public void setStatusTrue(boolean statusTrue) {
-        this.statusTrue = statusTrue;
-    }
+ 
     
     
 }
