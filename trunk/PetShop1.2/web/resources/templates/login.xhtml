@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
+
+    <h:head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <link href="#{facesContext.externalContext.requestContextPath}/resources/css/principal_entidades.css" rel="stylesheet" type="text/css" />
+        <script type="text/javascript" src="#{facesContext.externalContext.requestContextPath}/resources/javascript/traducoes.js"></script>
+        <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+        <style type="text/css">
+            .ui-widget {
+                font-size: 80%;
+            }
+        </style>
+        <script type="text/javascript">  
+            function start() {  
+                statusDialog.show();  
+            }  
+
+            function stop() {  
+                statusDialog.hide();  
+            }  
+        </script>
+    </h:head>
+
+    <h:body>
+        <p:growl id="growl" showDetail="true" life="6000"/>
+        <div id="container">
+            <p:ajaxStatus style="position:fixed;right:5px;">  
+                <f:facet name="start">
+                    <h:graphicImage value="/resources/images/ajax-loader.gif" />
+                </f:facet>
+                <f:facet name="complete">
+                    <h:outputText value="" />
+                </f:facet>
+            </p:ajaxStatus>
+            
+            <div id="logotipo">
+                <h:graphicImage library="images" name="cabecalho.png"/>
+            </div>
+
+            <div id="menu_horizontal">
+                <ui:insert name="menu_horizontal">
+
+                </ui:insert>            
+            </div>        
+
+            <div id="corpo">
+                <ui:insert name="corpo">
+                    Conteúdo aqui.
+                </ui:insert>
+            </div>
+
+            <p:panel>
+                <div id="rodape">
+                    Instituto Federal de Educação Ciência e Tecnologia do Tocantins  <br/>
+                    Contatos: (63) XXXX-XXXX | (63) XXXX-XXXX <br/>
+                    <strong>IFTO</strong> &copy; 2012
+                </div>        
+            </p:panel>
+            
+        </div>
+        
+    </h:body>
+
+</html>
