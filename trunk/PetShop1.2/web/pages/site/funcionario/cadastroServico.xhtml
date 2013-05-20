@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this template, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets"
+                template="../../../resources/templates/login.xhtml"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:sec="http://www.springframework.org/security/facelets/tags" >
+
+
+    <ui:define name="corpo">
+        <p:growl  autoUpdate="true" />
+        <h:form id="formCadastroServico">
+            <p:fieldset legend="Cadastro de Serviços">
+
+                <p:panelGrid columns="2">
+                    <p:outputLabel value="Descrição" for="descricao"/>
+                    <p:inputText id="descricao"  value=""/>
+
+                    <p:outputLabel value="Valor" for="valor"/>
+                    <p:inputText value="" id="valor"/>
+                </p:panelGrid>
+                <p:commandButton value="Cadastrar"/>
+            </p:fieldset >
+            <p:fieldset legend="Lista de Serviços">
+                <p:dataTable value="" var="ser">
+                    <p:column headerText="Descrição">
+                        <h:outputText value=""/>
+                    </p:column>
+                    <p:column headerText="Valor">
+                        <h:outputText value=""/>
+                    </p:column>
+                    <p:column headerText="Opções" style="width: 200px;">
+                        <p:commandButton value="Excluir"/>
+                        <p:commandButton value="Editar" onclick="dialogServico.show();"/>
+                    </p:column>
+
+                </p:dataTable>                     
+            </p:fieldset>
+        </h:form>
+
+        <h:form id="formDialogServico">
+            <p:dialog id="dialogServico" widgetVar="dialogServico" >
+
+                <p:fieldset legend="Editar Serviços">
+
+                    <p:panelGrid columns="2">
+                        <p:outputLabel value="Descrição" for="descricao"/>
+                        <p:inputText id="descricao"  value=""/>
+
+                        <p:outputLabel value="Valor" for="valor"/>
+                        <p:inputText value="" id="valor"/>
+                    </p:panelGrid>
+                    <p:commandButton value="Editar"/>
+
+                </p:fieldset>
+
+            </p:dialog>
+        </h:form>
+
+    </ui:define>
+
+
+
+</ui:composition>
