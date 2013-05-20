@@ -1,0 +1,44 @@
+body{
+    margin:0;
+    padding:0;
+    text-align:center; /* hack para o IE */
+}
+
+#container{
+    width: 900px;
+    margin:0 auto;         
+    text-align:left; /* "remédio" para o hack do IE */ 
+}
+
+#logotipo {
+    float: inside;
+}
+
+#menu_horizontal {
+    text-align: center;
+    margin-top: 0px;
+    margin-bottom: 5px;
+    min-height: 30px;
+}
+
+#corpo {
+    margin-bottom: 5px;   
+}
+
+#rodape {
+    margin: 0px 0px 0px 0px;
+    text-align: center;
+    font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+}
+
+#menu_horizontal a:link, #menu_horizontal a:visited {
+    color: darkslategray;
+    text-shadow: none;
+    text-decoration: none;
+}
+
+#menu_horizontal a:link:hover, #menu_horizontal a:visited:hover  {
+    color: black;
+    text-decoration: underline;
+}
+
