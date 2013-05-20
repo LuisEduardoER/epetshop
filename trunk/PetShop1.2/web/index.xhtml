@@ -1,12 +1,47 @@
-<?xml version='1.0' encoding='UTF-8' ?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:h="http://java.sun.com/jsf/html">
-    <h:head>
-        <title>Facelet Title</title>
-    </h:head>
-    <h:body>
-        Hello from Facelets
-    </h:body>
-</html>
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui">
+    <f:view contentType="text/html">
+        <h:head>
+            <style type="text/css">
+                .ui-widget {
+                    font-size: 80%;
+                }
+                .ui-widget input {
+                    font-size: 120%;
+                }
+            </style>
+            <title>
+            </title>
+            <meta content='text/html; charset=UTF-8' http-equiv='Content-Type'/>
+        </h:head>
+        <h:body style="background-image:url(resources/images/wall.jpg);background-position: 50% 0%;background-repeat: no-repeat">    
+            
+            <p:dialog id="dialog" visible="true" closable="false" draggable="true" resizable="false" width="350" widgetVar="dlg"
+                      header="Ecoordenador - login">
+                <center>
+                    <h:outputText value="Usuário e/ou senha inválidos!" rendered="#{param.error}" 
+                    style="color:darkred; font-size: 14px; padding-bottom: 10px;"/>
 
+                    <form action="j_spring_security_check" method="post">
+                        <h:panelGrid columns="2" cellpadding="3" style="font-weight: bold;">
+                                <h:outputLabel for="j_username" value="Usuário: *" />
+                                <p:inputText id="j_username" size="20" style="width: 180px;"/>
+
+                                <h:outputLabel for="j_password" value="Senha: *" />
+                                <p:password id="j_password" size="18" style="width: 180px;"/>
+                        </h:panelGrid>
+                        
+                        <!--<h:link value="Ainda não é cadastrado?" outcome="cadastro"/>-->
+                        <br/>
+                        <h:commandButton value="Entrar" style="margin-top: 15px;"/>
+                        <h:commandButton value="sair" onclick="self.close()"/>
+                    </form>
+                </center>
+            </p:dialog>
+ 
+        </h:body>
+    </f:view>
+</html>
