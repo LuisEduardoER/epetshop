@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this template, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets"
+                template="../../../resources/templates/login.xhtml"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:sec="http://www.springframework.org/security/facelets/tags" >
+
+    <ui:define name="corpo">
+        <style type="text/css">
+            .semBorda tr, .semBorda td {  
+                border: none !important;  
+            }
+        </style>
+        <h:form>
+            <p:growl id="growl"/>
+            <p:fieldset legend="Cadastro Cliente">
+                <p:panelGrid columns="2" styleClass="semBorda">
+                    <p:panelGrid columns="2">
+                        <h:outputLabel value="Nome" for="nome"/>
+                        <p:inputText   value="#{controllerCliente.cliente.nome}" id="nome"/>                
+                        <h:outputLabel value="Login" for="login"/>
+                        <p:inputText   value="#{controllerCliente.cliente.login}" id="login"/>                
+                        <p:outputLabel value="Telefone" for="telefone"/>
+                        <p:inputMask mask="(999)-9999-9999"   value="#{controllerCliente.cliente.contato}" id="telefone"/>                            
+                        <p:outputLabel value="Endereco" for="endereco"/>
+                        <p:inputText   value="#{controllerCliente.cliente.endereco}" id="endereco"/>                
+                        <p:outputLabel value="Numero" for="numero"/>
+                        <p:inputText   value="#{controllerCliente.cliente.numero}" id="numero"/>
+                    </p:panelGrid>
+                    <p:panelGrid columns="2">                        
+                        <p:outputLabel value="Complemento" for="complemento"/>
+                        <p:inputText   value="#{controllerCliente.cliente.complemento}" id="complemento"/>
+                        <p:outputLabel value="Bairro" for="bairro"/>
+                        <p:inputText   value="#{controllerCliente.cliente.bairro}" id="bairro"/>
+                        <p:outputLabel value="Cidade" for="cidade"/>
+                        <p:inputText   value="#{controllerCliente.cliente.cidade}" id="cidade"/>
+                        <p:outputLabel value="Status" for="status"/>
+                        <p:selectOneRadio value="#{controllerCliente.cliente.ativo}" id="status">
+                            <f:selectItem itemLabel="Ativo"  itemValue="1"/>
+                            <f:selectItem itemLabel="Desativado" itemValue="2"/>
+                        </p:selectOneRadio> 
+                        <p:outputLabel value="Email"  for="email"/>
+                        <p:inputText   value="#{controllerCliente.cliente.email}" id="email"/>
+                    </p:panelGrid>
+                    
+                </p:panelGrid>
+                
+                <p:commandButton value="Cadastrar" actionListener="" update="growl dataTableFuncionario" />
+                
+            </p:fieldset>
+            
+            <p:fieldset legend="Funcionarios" rendered=" #{ControllerFuncionario.listaDataModel == null}">
+                <p:dataTable id="dataTableFuncionario" value="#{ControllerFuncionario.listaDM}" var="cli">
+                    <p:column headerText="Nome">
+                        <h:outputText value="#{cli.nome}"/>
+                    </p:column>
+                    <p:column headerText="Login">
+                        <h:outputText value="#{cli.login}"/>
+                    </p:column>
+                    <p:column headerText="Telefone">
+                        <h:outputText value="#{cli.contato}"/>
+                    </p:column>                    
+                    <p:column headerText="Endereco">
+                        <h:outputText value="#{cli.contato}"/>
+                    </p:column>
+                    <p:column headerText="Numero">
+                        <h:outputText value="#{cli.numero}"/>
+                    </p:column>
+                    <p:column headerText="Complemento">
+                        <h:outputText value="#{cli.complemento}"/>
+                    </p:column>
+                    <p:column headerText="Bairro">
+                        <h:outputText value="#{cli.bairro}"/>
+                    </p:column>
+                    <p:column headerText="Cidade">
+                        <h:outputText value="#{cli.cidade}"/>
+                    </p:column>
+                    <p:column headerText="Estado">
+                        <h:outputText value="#{cli.estado}"/>
+                    </p:column>
+                    <p:column headerText="Status">
+                        <h:outputText value="#{cli.status}"/>
+                    </p:column>
+                    <p:column headerText="Email">
+                        <h:outputText value="#{cli.email}"/>
+                    </p:column>
+                    <p:column headerText="Data Cadastro">
+                        <h:outputText value="#{cli.datacadastro}" >
+                            <f:convertDateTime pattern="dd/MM/yyyy"/>
+                        </h:outputText>
+                    </p:column>
+                    <p:column headerText="Opções">
+                        <p:commandButton value="Excluir"/>
+                        <p:commandButton value="Editar" actionListener="#{controllerCliente.prepararAlterar()}" onclick="dialogFuncionario.show();"/>
+                    </p:column>
+                </p:dataTable>
+            </p:fieldset>
+        </h:form>
+            
+            <h:form id="fomrEditarFuncionario">
+            <p:dialog id="dialogFuncionario" widgetVar="dialogFuncionario" >                
+                <p:fieldset legend="Cadastro Funcionario" >
+                    <p:panelGrid columns="2" styleClass="semBorda">
+                    <p:panelGrid columns="2">
+                        <h:outputLabel value="Nome" for="nome"/>
+                        <p:inputText   value="#{ControllerFuncionario.funcionario.nome}" id="nome"/>                
+                        <h:outputLabel value="Login" for="login"/>
+                        <p:inputText   value="#{ControllerFuncionario.funcionario.login}" id="login"/>                
+                        <p:outputLabel value="Telefone" for="telefone"/>
+                        <p:inputMask mask="(999)-9999-9999"   value="#{ControllerFuncionario.funcionario.contato}" id="telefone"/>                            
+                        <p:outputLabel value="Endereco" for="endereco"/>
+                        <p:inputText   value="#{ControllerFuncionario.funcionario.endereco}" id="endereco"/>                
+                        <p:outputLabel value="Numero" for="numero"/>
+                        <p:inputText   value="#{ControllerFuncionario.funcionario.numero}" id="numero"/>
+                    </p:panelGrid>
+                    <p:panelGrid columns="2">                        
+                        <p:outputLabel value="Complemento" for="complemento"/>
+                        <p:inputText   value="#{ControllerFuncionario.funcionario.complemento}" id="complemento"/>
+                        <p:outputLabel value="Bairro" for="bairro"/>
+                        <p:inputText   value="#{ControllerFuncionario.funcionario.bairro}" id="bairro"/>
+                        <p:outputLabel value="Cidade" for="cidade"/>
+                        <p:inputText   value="#{ControllerFuncionario.funcionario.cidade}" id="cidade"/>
+                        <p:outputLabel value="Status" for="status"/>
+                        <p:selectOneRadio value="#{ControllerFuncionario.funcionario.ativo}" id="status">
+                            <f:selectItem itemLabel="Ativo" itemValue="#{ControllerFuncionario.statusTrue}"/>
+                            <f:selectItem itemLabel="Desativado" itemValue="#{ControllerFuncionario.statusFalse}"/>
+                        </p:selectOneRadio> 
+                        <p:outputLabel value="Email"  for="email"/>
+                        <p:inputText   value="#{ControllerFuncionario.funcionario.email}" id="email"/>
+                    </p:panelGrid>
+                    
+                </p:panelGrid>
+            </p:fieldset>
+            </p:dialog>
+            
+        </h:form>
+    </ui:define>
+
+</ui:composition>
