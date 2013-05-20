@@ -8,11 +8,11 @@
                 xmlns:sec="http://www.springframework.org/security/facelets/tags" >
 
     <ui:define name="menu_horizontal">
-        <sec:ifAnyGranted roles="ROLE_ALUNO,ROLE_ADMINISTRADOR">
-            <ui:include src="/site/acessoAluno/menu.xhtml" />
+        <sec:ifAnyGranted roles="ROLE_CLI,ROLE_ADMIN">
+            <ui:include src="/pages/site/cliente/menu.xhtml" />
         </sec:ifAnyGranted>
-        <sec:ifAnyGranted roles="ROLE_SERVIDOR,ROLE_ADMINISTRADOR">
-            <ui:include src="/site/acessoServidor/menu.xhtml" />
+        <sec:ifAnyGranted roles="ROLE_FUNC,ROLE_ADMIN">
+            <ui:include src="/pages/site/funcionario/menu.xhtml" />
         </sec:ifAnyGranted>
     </ui:define>
     
