@@ -7,6 +7,7 @@ and open the template in the editor.
 <ui:composition xmlns:ui="http://java.sun.com/jsf/facelets"
                 template="../../../resources/templates/login.xhtml"
                 xmlns:p="http://primefaces.org/ui"
+                xmlns="http://www.w3.org/1999/xhtml"
                 xmlns:h="http://java.sun.com/jsf/html"
                 xmlns:f="http://java.sun.com/jsf/core"
                 xmlns:sec="http://www.springframework.org/security/facelets/tags" >
@@ -42,8 +43,8 @@ and open the template in the editor.
                         <p:inputText   value="#{ControllerFuncionario.funcionario.cidade}" id="cidade"/>
                         <p:outputLabel value="Status" for="status"/>
                         <p:selectOneRadio value="#{ControllerFuncionario.funcionario.ativo}" id="status">
-                            <f:selectItem itemLabel="Ativo" itemValue="#{ControllerFuncionario.statusTrue}"/>
-                            <f:selectItem itemLabel="Desativado" itemValue="#{ControllerFuncionario.statusFalse}"/>
+                            <f:selectItem itemLabel="Ativo"  itemValue="1"/>
+                            <f:selectItem itemLabel="Desativado" itemValue="2"/>
                         </p:selectOneRadio> 
                         <p:outputLabel value="Email"  for="email"/>
                         <p:inputText   value="#{ControllerFuncionario.funcionario.email}" id="email"/>
@@ -97,7 +98,7 @@ and open the template in the editor.
                     </p:column>
                     <p:column headerText="Opções">
                         <p:commandButton value="Excluir"/>
-                        <p:commandButton value="Editar" onclick="dialogFuncionario.show();"/>
+                        <p:commandButton value="Editar" actionListener="#{ControllerFuncionario.prepararAlterar()}" onclick="dialogFuncionario.show();"/>
                     </p:column>
                 </p:dataTable>
             </p:fieldset>
