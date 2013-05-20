@@ -20,6 +20,7 @@ public class Usuario implements Serializable {
     
         @Id
         @Column(name="id")
+        @GeneratedValue(strategy=GenerationType.IDENTITY)
         private Integer id;
     
         @Column(name="login",length=20,unique=true)
@@ -77,8 +78,8 @@ public class Usuario implements Serializable {
         
         ////////////////////////////////////////////////////////////////////////
         // para inserir no banco o MD5 use a sequinte query:
-        // insert into usuario(id,login,senha,ativo,email,apelido)
-        // values (1,'teste',MD5('123'),true,'bla@gm','Nome');
+        // insert into usuario(id,login,senha,ativo,email)
+        // values (1,'teste',MD5('123'),true,'bla@gm');
         // colocar tbm a permissao:
         // insert into usuario_permissao(id,permissao,id_usuario)
         // values (1,'ROLE_ADMIN',1);
