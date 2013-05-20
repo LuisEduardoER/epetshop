@@ -20,7 +20,7 @@
         <h:body style="background-image:url(resources/images/wall.jpg);background-position: 50% 0%;background-repeat: no-repeat">    
             
             <p:dialog id="dialog" visible="true" closable="false" draggable="true" resizable="false" width="350" widgetVar="dlg"
-                      header="Ecoordenador - login">
+                      header="ePetshop - login">
                 <center>
                     <h:outputText value="Usuário e/ou senha inválidos!" rendered="#{param.error}" 
                     style="color:darkred; font-size: 14px; padding-bottom: 10px;"/>
@@ -34,7 +34,7 @@
                                 <p:password id="j_password" size="18" style="width: 180px;"/>
                         </h:panelGrid>
                         
-                        <!--<h:link value="Ainda não é cadastrado?" outcome="cadastro"/>te-->
+                        <!--<h:link value="Ainda não é cadastrado?" outcome="cadastro"/>-->
                         <br/>
                         <h:commandButton value="Entrar" style="margin-top: 15px;"/>
                         <h:commandButton value="sair" onclick="self.close()"/>
