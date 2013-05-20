@@ -81,7 +81,7 @@ public class Usuario implements Serializable {
         // values (1,'teste',MD5('123'),true,'bla@gm','Nome');
         // colocar tbm a permissao:
         // insert into usuario_permissao(id,permissao,id_usuario)
-        // values (1,'ROLE_ADMINISTRADOR',1);
+        // values (1,'ROLE_ADMIN',1);
         
         public static String MD5(String senha) {
             PasswordEncoder encoder = new Md5PasswordEncoder();
