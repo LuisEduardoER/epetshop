@@ -5,7 +5,7 @@ body{
 }
 
 #container{
-    width: 900px;
+    width: 960px;
     margin:0 auto;         
     text-align:left; /* "remédio" para o hack do IE */ 
 }
