@@ -1,9 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!--
-To change this template, choose Tools | Templates
-and open the template in the editor.
--->
-<!DOCTYPE html>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <ui:composition xmlns:ui="http://java.sun.com/jsf/facelets"
                 template="../../../resources/templates/login.xhtml"
                 xmlns:p="http://primefaces.org/ui"
@@ -13,55 +9,60 @@ and open the template in the editor.
 
 
     <ui:define name="corpo">
-        <p:growl  autoUpdate="true" />
-        <h:form id="formCadastroServico">
-            <p:fieldset legend="Cadastro de Serviços">
-
-                <p:panelGrid columns="2">
-                    <p:outputLabel value="Descrição" for="descricao"/>
-                    <p:inputText id="descricao"  value=""/>
-
-                    <p:outputLabel value="Valor" for="valor"/>
-                    <p:inputText value="" id="valor"/>
-                </p:panelGrid>
-                <p:commandButton value="Cadastrar"/>
-            </p:fieldset >
-            <p:fieldset legend="Lista de Serviços">
-                <p:dataTable value="" var="ser">
-                    <p:column headerText="Descrição">
-                        <h:outputText value=""/>
-                    </p:column>
-                    <p:column headerText="Valor">
-                        <h:outputText value=""/>
-                    </p:column>
-                    <p:column headerText="Opções" style="width: 200px;">
-                        <p:commandButton value="Excluir"/>
-                        <p:commandButton value="Editar" onclick="dialogServico.show();"/>
-                    </p:column>
-
-                </p:dataTable>                     
-            </p:fieldset>
-        </h:form>
-
-        <h:form id="formDialogServico">
-            <p:dialog id="dialogServico" widgetVar="dialogServico" >
-
-                <p:fieldset legend="Editar Serviços">
+        <sec:ifAnyGranted roles="ROLE_ADMIN,ROLE_FUNC">
+            <p:growl  autoUpdate="true" />
+            <h:form id="formCadastroServico">
+                <p:fieldset legend="Cadastro de Serviços">
 
                     <p:panelGrid columns="2">
                         <p:outputLabel value="Descrição" for="descricao"/>
-                        <p:inputText id="descricao"  value=""/>
+                        <p:inputText id="descricao"  value="#{controllerServico.servico.tipo}"/>
 
                         <p:outputLabel value="Valor" for="valor"/>
-                        <p:inputText value="" id="valor"/>
+                        <p:inputText value="#{controllerServico.servico.preco}" id="valor"/>
                     </p:panelGrid>
-                    <p:commandButton value="Editar"/>
-
+                    <br/>
+                    <p:commandButton value="Cadastrar" actionListener="#{controllerServico.salvar()}" update="@form"/>
+                </p:fieldset >
+                <br/>
+                <p:fieldset legend="Lista de Serviços">
+                    <p:dataTable id="tabela" var="p" value="#{controllerServico.listaDM}" paginator="true" rows="5" 
+                           paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}" 
+                           rowsPerPageTemplate="5,10,15"       emptyMessage="Nada encontrado...">
+                        <p:column headerText="Serviço" filterBy="#{p.tipo}">
+                            <h:outputText  value="#{p.tipo}"/>
+                        </p:column>
+                        <p:column headerText="Preço" filterBy="#{p.preco}">
+                            <h:outputText  value="#{p.preco}"/>
+                        </p:column>
+                        <p:column headerText="Opções" style="width: 200px;">
+                            <p:commandButton value="Excluir" actionListener="#{controllerServico.remover()}" update="@form"/>
+                            <p:commandButton value="Editar" actionListener="#{controllerServico.prepararAlterar()}" update="formDialogServico" onclick="dialogServico.show();"/>
+                        </p:column>
+                    </p:dataTable>                  
                 </p:fieldset>
+            </h:form>
 
-            </p:dialog>
-        </h:form>
+            <h:form id="formDialogServico">
+                <p:dialog id="dialogServico" widgetVar="dialogServico" >
 
+                    <p:fieldset legend="Editar Serviços">
+
+                        <p:panelGrid columns="2">
+                            <p:outputLabel value="Descrição" for="descricao"/>
+                            <p:inputText id="descricao"  value="#{controllerServico.servico.tipo}"/>
+
+                            <p:outputLabel value="Valor" for="valor"/>
+                            <p:inputText value="#{controllerServico.servico.preco}" id="valor"/>
+                        </p:panelGrid>
+                        <br/>
+                        <p:commandButton value="Alterar" actionListener="#{controllerServico.alterar()}" update="formCadastroServico" oncomplete="dialogServico.hide();"/>
+
+                    </p:fieldset>
+
+                </p:dialog>
+            </h:form>
+        </sec:ifAnyGranted>
     </ui:define>
 
 
