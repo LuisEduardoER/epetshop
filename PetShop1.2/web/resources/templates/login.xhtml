@@ -30,14 +30,7 @@
     <h:body>
         <p:growl id="growl" showDetail="true" life="6000"/>
         <div id="container">
-            <p:ajaxStatus style="position:fixed;right:5px;">  
-                <f:facet name="start">
-                    <h:graphicImage value="/resources/images/ajax-loader.gif" />
-                </f:facet>
-                <f:facet name="complete">
-                    <h:outputText value="" />
-                </f:facet>
-            </p:ajaxStatus>
+            
             
             <div id="logotipo">
                 <h:graphicImage library="images" name="cabecalho.png"/>
@@ -61,6 +54,14 @@
                     Contatos: (63) XXXX-XXXX | (63) XXXX-XXXX <br/>
                     <strong>ePETSHOP</strong> &copy; 2013
                 </div>        
+                <p:ajaxStatus style="position: relative;float: right; margin-top: -50px;">  
+                    <f:facet name="start">
+                        <h:graphicImage value="/resources/images/ajax-loader.gif" />
+                    </f:facet>
+                    <f:facet name="complete">
+                        <h:outputText value="" />
+                    </f:facet>
+                </p:ajaxStatus>
             </p:panel>
             
         </div>
