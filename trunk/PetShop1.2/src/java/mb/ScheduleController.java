@@ -8,11 +8,9 @@ import beans.Agenda;
 import java.awt.event.ActionEvent;
 import java.io.Serializable;
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
-import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
@@ -23,7 +21,6 @@ import javax.faces.model.ListDataModel;
 import org.primefaces.event.DateSelectEvent;
 import org.primefaces.event.SelectEvent;
 import org.primefaces.model.DefaultScheduleEvent;
-import org.primefaces.model.DefaultScheduleModel;
 import org.primefaces.model.ScheduleEvent;
 import org.primefaces.model.ScheduleModel;
 import rn.AgendaRN;
@@ -67,9 +64,7 @@ public class ScheduleController implements Serializable {
         getAgenda().setHora(event.getStartDate());
         rn.salvar(this.agenda);
         FacesContext context = FacesContext.getCurrentInstance();            
-        context.addMessage(null, new FacesMessage("Cadastrado com Sucesso"));
-        limpar();
-       
+        context.addMessage(null, new FacesMessage("Cadastrado com Sucesso"));      
     }
     
     public void remover(){

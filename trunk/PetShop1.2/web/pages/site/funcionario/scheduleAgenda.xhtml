@@ -33,11 +33,11 @@
 
                 </p:schedule>  
 
-                <p:dialog widgetVar="eventDialog" header="Detalhes do agendamento" showEffect="clip" hideEffect="clip" modal="true" closable="false">  
+                <p:dialog widgetVar="eventDialog" header="Detalhes do agendamento" showEffect="clip" hideEffect="clip" modal="true" closable="true">  
                     <h:panelGrid id="eventDetails" columns="2">
                         
                         <h:outputText value="Serviços: *"/>
-                        <p:selectOneMenu value="#{controllerAgenda.agenda.servico}" converter="#{ServicoConverter}">
+                        <p:selectOneMenu value="#{scheduleController.agenda.servico}" converter="#{ServicoConverter}">
                             <f:selectItem itemLabel="-- Selecione --" noSelectionOption="true"/>
                             <f:selectItems value="#{controllerServico.lista}" var="tipo" itemValue="#{tipo}" itemLabel="#{tipo.tipo} | R$ #{tipo.preco}"/>
                         </p:selectOneMenu> 
@@ -52,7 +52,6 @@
 
                         
                     </h:panelGrid>  
-                    <p:commandButton value="Fechar" actionListener="#{scheduleController.limpar()}" oncomplete="eventDialog.hide();" update=":formEvent"/> 
                     
                     <p:commandButton value="Salvar" actionListener="#{scheduleController.salvar()}" oncomplete="myschedule.update();eventDialog.hide();"/>
                 </p:dialog>
