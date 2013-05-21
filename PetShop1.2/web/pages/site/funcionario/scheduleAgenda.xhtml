@@ -18,10 +18,9 @@
     <ui:define name="corpo">
 
         <sec:ifAnyGranted roles="ROLE_ADMIN,ROLE_FUNC">
-            <p:growl  autoUpdate="true" />
             
             <h:form id="formEvent">
-                <p:messages id="messages"/>
+                <!--<p:messages id="messages"/>-->
                 
                 <p:schedule id="schedule" value="#{scheduleController.eventModel}" widgetVar="myschedule" allDaySlot="false" minTime="8am" maxTime="6pm" showWeekends="false"
                             rightHeaderTemplate="agendaWeek" draggable="false" leftHeaderTemplate="prev,next" view="agendaWeek">  

@@ -8,4 +8,5 @@ public interface InterfaceHibernateDAO<T> {
     public void excluir(T entidade);
     public T carregar(Integer codigo);
     public List<T> listar();
+    public List<T> buscaPersonalizada(String atributo,String nomeBuscado);
 }
