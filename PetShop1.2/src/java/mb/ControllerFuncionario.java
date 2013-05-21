@@ -4,8 +4,10 @@
  */
 package mb;
 
-import beans.Servico;
 import beans.Usuario;
+import beans.UsuarioPermissao;
+import java.util.Date;
+import java.util.List;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
@@ -14,82 +16,131 @@ import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
 import javax.faces.model.DataModel;
 import javax.faces.model.ListDataModel;
+import rn.UsuarioPermissaoRN;
 import rn.UsuarioRN;
 
 /**
  *
  * @author diogenes
  */
-@ManagedBean(name="ControllerFuncionario")
+@ManagedBean(name="controllerFuncionario")
 @SessionScoped
 public class ControllerFuncionario {
+    
+    public ControllerFuncionario() {}
 
-    private DataModel listaDataModel;
+    private DataModel listaDataModelUsuario;
+    private DataModel listaDataModelPermissao;
+    
     @ManagedProperty(value="#{usuario}")
-    private Usuario funcionario;
+    private Usuario usuario;
+    @ManagedProperty(value="#{usuario_permissao}")
+    private UsuarioPermissao permissao;
     
+    private List<Usuario> listaUsuario;
+    private List<UsuarioPermissao> listaPermissao;
     
-    
-    public ControllerFuncionario() {
+    public void limpar() {
+        setUsuario(new Usuario());
+        setPermissao(new UsuarioPermissao());
     }
     
-    
-    
-    public void cadastrar(ActionEvent event){
-        this.getFuncionario();
+    public void cadastrar(){
         UsuarioRN rn = new UsuarioRN();
-        rn.salvar(this.funcionario);
-        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Funcionario Cadastrado"));
+        UsuarioPermissaoRN rn2 = new UsuarioPermissaoRN();
+        try {
+            if (this.usuario.getSenha().equals(this.usuario.getSenha2())) {
+                getPermissao().setUsuario(this.usuario);
+                getPermissao().setPermissao("ROLE_FUNC");
+                getUsuario().setData_cadastro(new Date());
+                rn.salvar(this.usuario);
+                rn2.salvar(this.permissao);
+                limpar();
+                FacesContext context = FacesContext.getCurrentInstance();            
+                context.addMessage(null, new FacesMessage("Cadastro efetuado com sucesso."));
+            } else {
+                FacesContext context = FacesContext.getCurrentInstance();  
+                context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,"Atenção", "Senhas devem ser iguais."));
+            }
+        } catch(Exception e) {
+            //precisa debugar
+            FacesContext context = FacesContext.getCurrentInstance();  
+            context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR,"ERRO", "Usuário já cadastrado."));
+        }
     }
-    
+
     
     public void excluir(){
         UsuarioRN rn = new UsuarioRN();
-        rn.excluir(this.funcionario);
+        rn.excluir(this.usuario);
         FacesContext context = FacesContext.getCurrentInstance();          
         context.addMessage(null, new FacesMessage("Excluído com Sucesso"));
     }
     
-    
     public void editar(){
         UsuarioRN rn = new UsuarioRN();
-        rn.atualizar(this.funcionario);
+        rn.atualizar(this.usuario);
         FacesContext context = FacesContext.getCurrentInstance();          
         context.addMessage(null, new FacesMessage("Editado com Sucesso"));
     }
     
     public DataModel getListaDM(){
         UsuarioRN rn = new UsuarioRN();
-        this.listaDataModel = new ListDataModel(rn.listar());
-        return listaDataModel;
+        this.listaDataModelUsuario = new ListDataModel(rn.listar());
+        return listaDataModelUsuario;
     }
 
     
     public void prepararAlterar() {
-        this.funcionario = (Usuario) this.listaDataModel.getRowData();
-    }
-    
-    
-    public DataModel getListaDataModel() {        
-        return listaDataModel;
+        this.usuario = (Usuario) this.listaDataModelUsuario.getRowData();
     }
 
-    public void setListaDataModel(DataModel listaDataModel) {
-        this.listaDataModel = listaDataModel;
+    public DataModel getListaDataModelUsuario() {
+        return listaDataModelUsuario;
     }
 
-    public Usuario getFuncionario() {
-        if(funcionario == null){
-            funcionario = new Usuario();
-        }
-        return funcionario;
+    public void setListaDataModelUsuario(DataModel listaDataModelUsuario) {
+        this.listaDataModelUsuario = listaDataModelUsuario;
     }
 
-    public void setFuncionario(Usuario funcionario) {
-        this.funcionario = funcionario;
+    public DataModel getListaDataModelPermissao() {
+        return listaDataModelPermissao;
     }
 
- 
-    
+    public void setListaDataModelPermissao(DataModel listaDataModelPermissao) {
+        this.listaDataModelPermissao = listaDataModelPermissao;
+    }
+
+    public Usuario getUsuario() {
+        return usuario;
+    }
+
+    public void setUsuario(Usuario usuario) {
+        this.usuario = usuario;
+    }
+
+    public UsuarioPermissao getPermissao() {
+        return permissao;
+    }
+
+    public void setPermissao(UsuarioPermissao permissao) {
+        this.permissao = permissao;
+    }
+
+    public List<Usuario> getListaUsuario() {
+        return listaUsuario;
+    }
+
+    public void setListaUsuario(List<Usuario> listaUsuario) {
+        this.listaUsuario = listaUsuario;
+    }
+
+    public List<UsuarioPermissao> getListaPermissao() {
+        return listaPermissao;
+    }
+
+    public void setListaPermissao(List<UsuarioPermissao> listaPermissao) {
+        this.listaPermissao = listaPermissao;
+    }
     
 }
