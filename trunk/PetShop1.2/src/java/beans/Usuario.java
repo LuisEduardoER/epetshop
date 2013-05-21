@@ -54,7 +54,7 @@ public class Usuario implements Serializable {
         private String cidade;
         
         @Column(name="estado")
-        private String estato;
+        private String estado;
         
         @Column(name="ativo")
         private Boolean ativo=false;
@@ -196,12 +196,12 @@ public class Usuario implements Serializable {
         this.cidade = cidade;
     }
 
-    public String getEstato() {
-        return estato;
+    public String getEstado() {
+        return estado;
     }
 
-    public void setEstato(String estato) {
-        this.estato = estato;
+    public void setEstado(String estado) {
+        this.estado = estado;
     }
 
     public Boolean getAtivo() {

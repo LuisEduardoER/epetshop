@@ -11,136 +11,146 @@ and open the template in the editor.
                 xmlns:h="http://java.sun.com/jsf/html"
                 xmlns:f="http://java.sun.com/jsf/core"
                 xmlns:sec="http://www.springframework.org/security/facelets/tags" >
-
+        
+    <ui:define name="menu_horizontal">
+        <sec:ifAnyGranted roles="ROLE_ADMIN,ROLE_FUNC">
+            <ui:include src="/pages/site/funcionario/menu.xhtml" />
+        </sec:ifAnyGranted>
+    </ui:define>
     <ui:define name="corpo">
         <style type="text/css">
             .semBorda tr, .semBorda td {  
                 border: none !important;  
             }
         </style>
-        <h:form>
-            <p:growl id="growl"/>
-            <p:fieldset legend="Cadastro Funcionario">
-                <p:panelGrid columns="2" styleClass="semBorda">
-                    <p:panelGrid columns="2">
-                        <h:outputLabel value="Nome" for="nome"/>
-                        <p:inputText   value="#{ControllerFuncionario.funcionario.nome}" id="nome"/>                
-                        <h:outputLabel value="Login" for="login"/>
-                        <p:inputText   value="#{ControllerFuncionario.funcionario.login}" id="login"/>                
-                        <p:outputLabel value="Telefone" for="telefone"/>
-                        <p:inputMask mask="(999)-9999-9999"   value="#{ControllerFuncionario.funcionario.contato}" id="telefone"/>                            
-                        <p:outputLabel value="Endereco" for="endereco"/>
-                        <p:inputText   value="#{ControllerFuncionario.funcionario.endereco}" id="endereco"/>                
-                        <p:outputLabel value="Numero" for="numero"/>
-                        <p:inputText   value="#{ControllerFuncionario.funcionario.numero}" id="numero"/>
-                    </p:panelGrid>
-                    <p:panelGrid columns="2">                        
-                        <p:outputLabel value="Complemento" for="complemento"/>
-                        <p:inputText   value="#{ControllerFuncionario.funcionario.complemento}" id="complemento"/>
-                        <p:outputLabel value="Bairro" for="bairro"/>
-                        <p:inputText   value="#{ControllerFuncionario.funcionario.bairro}" id="bairro"/>
-                        <p:outputLabel value="Cidade" for="cidade"/>
-                        <p:inputText   value="#{ControllerFuncionario.funcionario.cidade}" id="cidade"/>
-                        <p:outputLabel value="Status" for="status"/>
-                        <p:selectOneRadio value="#{ControllerFuncionario.funcionario.ativo}" id="status">
-                            <f:selectItem itemLabel="Ativo"  itemValue="1"/>
-                            <f:selectItem itemLabel="Desativado" itemValue="2"/>
-                        </p:selectOneRadio> 
-                        <p:outputLabel value="Email"  for="email"/>
-                        <p:inputText   value="#{ControllerFuncionario.funcionario.email}" id="email"/>
-                    </p:panelGrid>
-                    
-                </p:panelGrid>
-                
-                <p:commandButton value="Cadastrar" actionListener="#{controllerUsuario.salvarUsuario()}" update="growl dataTableFuncionario" />
-                
-            </p:fieldset>
-            
-            <p:fieldset legend="Funcionarios" rendered=" #{ControllerFuncionario.listaDataModel == null}">
-                <p:dataTable id="dataTableFuncionario" value="#{ControllerFuncionario.listaDM}" var="fun">
-                    <p:column headerText="Nome">
-                        <h:outputText value="#{fun.nome}"/>
-                    </p:column>
-                    <p:column headerText="Login">
-                        <h:outputText value="#{fun.login}"/>
-                    </p:column>
-                    <p:column headerText="Telefone">
-                        <h:outputText value="#{fun.contato}"/>
-                    </p:column>                    
-                    <p:column headerText="Endereco">
-                        <h:outputText value="#{fun.contato}"/>
-                    </p:column>
-                    <p:column headerText="Numero">
-                        <h:outputText value="#{fun.numero}"/>
-                    </p:column>
-                    <p:column headerText="Complemento">
-                        <h:outputText value="#{fun.complemento}"/>
-                    </p:column>
-                    <p:column headerText="Bairro">
-                        <h:outputText value="#{fun.bairro}"/>
-                    </p:column>
-                    <p:column headerText="Cidade">
-                        <h:outputText value="#{fun.cidade}"/>
-                    </p:column>
-                    <p:column headerText="Estado">
-                        <h:outputText value="#{fun.estado}"/>
-                    </p:column>
-                    <p:column headerText="Status">
-                        <h:outputText value="#{fun.status}"/>
-                    </p:column>
-                    <p:column headerText="Email">
-                        <h:outputText value="#{fun.email}"/>
-                    </p:column>
-                    <p:column headerText="Data Cadastro">
-                        <h:outputText value="#{fun.datacadastro}" >
-                            <f:convertDateTime pattern="dd/MM/yyyy"/>
-                        </h:outputText>
-                    </p:column>
-                    <p:column headerText="Opções">
-                        <p:commandButton value="Excluir"/>
-                        <p:commandButton value="Editar" actionListener="#{ControllerFuncionario.prepararAlterar()}" onclick="dialogFuncionario.show();"/>
-                    </p:column>
-                </p:dataTable>
-            </p:fieldset>
-        </h:form>
-            
-            <h:form id="fomrEditarFuncionario">
-            <p:dialog id="dialogFuncionario" widgetVar="dialogFuncionario" >                
-                <p:fieldset legend="Cadastro Funcionario" >
+        <br/>
+        <sec:ifAnyGranted roles="ROLE_ADMIN,ROLE_FUNC">
+        
+            <h:form>
+                <p:growl id="growl"/>
+                <p:fieldset legend="Cadastro Funcionario">
                     <p:panelGrid columns="2" styleClass="semBorda">
-                    <p:panelGrid columns="2">
-                        <h:outputLabel value="Nome" for="nome"/>
-                        <p:inputText   value="#{ControllerFuncionario.funcionario.nome}" id="nome"/>                
-                        <h:outputLabel value="Login" for="login"/>
-                        <p:inputText   value="#{ControllerFuncionario.funcionario.login}" id="login"/>                
-                        <p:outputLabel value="Telefone" for="telefone"/>
-                        <p:inputMask mask="(999)-9999-9999"   value="#{ControllerFuncionario.funcionario.contato}" id="telefone"/>                            
-                        <p:outputLabel value="Endereco" for="endereco"/>
-                        <p:inputText   value="#{ControllerFuncionario.funcionario.endereco}" id="endereco"/>                
-                        <p:outputLabel value="Numero" for="numero"/>
-                        <p:inputText   value="#{ControllerFuncionario.funcionario.numero}" id="numero"/>
+                        <p:panelGrid columns="2">
+                            <h:outputLabel value="Nome" for="nome"/>
+                            <p:inputText   value="#{controllerFuncionario.usuario.nome}" id="nome"/>                
+                            <h:outputLabel value="Login" for="login"/>
+                            <p:inputText   value="#{controllerFuncionario.usuario.login}" id="login"/>                
+                            <p:outputLabel value="Telefone" for="telefone"/>
+                            <p:inputMask mask="(99)9999-9999"   value="#{controllerFuncionario.usuario.contato}" id="telefone"/>                            
+                            <h:outputText value="Senha: *"/>
+                            <p:password size="18" value="#{controllerFuncionario.usuario.senha}" required="true"
+                                        requiredMessage="campo senha é obrigatório." style="width: 150px;"/>
+                            <h:outputText value="Repita senha: *"/>
+                            <p:password size="18" value="#{controllerFuncionario.usuario.senha2}" required="true"
+                                        requiredMessage="campo senha é obrigatório." style="width: 150px;"/>
+                            <p:outputLabel value="Endereco" for="endereco"/>
+                            <p:inputText   value="#{controllerFuncionario.usuario.endereco}" id="endereco"/> 
+                        </p:panelGrid>
+                        <p:panelGrid columns="2">
+
+                            <p:outputLabel value="Numero" for="numero"/>
+                            <p:inputText   value="#{controllerFuncionario.usuario.numero}" id="numero"/>
+                            <p:outputLabel value="Complemento" for="complemento"/>
+                            <p:inputText   value="#{controllerFuncionario.usuario.complemento}" id="complemento"/>
+                            <p:outputLabel value="Bairro" for="bairro"/>
+                            <p:inputText   value="#{controllerFuncionario.usuario.bairro}" id="bairro"/>
+                            <p:outputLabel value="Cidade" for="cidade"/>
+                            <p:inputText   value="#{controllerFuncionario.usuario.cidade}" id="cidade"/>
+                            <h:outputText value="Ativo"/>
+                            <p:selectBooleanButton value="#{controllerFuncionario.usuario.ativo}" onLabel="Sim" offLabel="Não" />
+                            <p:outputLabel value="Email"  for="email"/>
+                            <p:inputText   value="#{controllerFuncionario.usuario.email}" id="email"/>
+                        </p:panelGrid>
+
                     </p:panelGrid>
-                    <p:panelGrid columns="2">                        
-                        <p:outputLabel value="Complemento" for="complemento"/>
-                        <p:inputText   value="#{ControllerFuncionario.funcionario.complemento}" id="complemento"/>
-                        <p:outputLabel value="Bairro" for="bairro"/>
-                        <p:inputText   value="#{ControllerFuncionario.funcionario.bairro}" id="bairro"/>
-                        <p:outputLabel value="Cidade" for="cidade"/>
-                        <p:inputText   value="#{ControllerFuncionario.funcionario.cidade}" id="cidade"/>
-                        <p:outputLabel value="Status" for="status"/>
-                        <p:selectOneRadio value="#{ControllerFuncionario.funcionario.ativo}" id="status">
-                            <f:selectItem itemLabel="Ativo" itemValue="#{ControllerFuncionario.statusTrue}"/>
-                            <f:selectItem itemLabel="Desativado" itemValue="#{ControllerFuncionario.statusFalse}"/>
-                        </p:selectOneRadio> 
-                        <p:outputLabel value="Email"  for="email"/>
-                        <p:inputText   value="#{ControllerFuncionario.funcionario.email}" id="email"/>
+                    <br/>
+                    <p:commandButton value="Cadastrar" actionListener="#{controllerFuncionario.cadastrar()}" update="@form" />
+
+
+                </p:fieldset>
+                <br/>
+                <p:fieldset legend="Funcionarios">
+                    <p:dataTable id="tabela" var="fun" value="#{controllerFuncionario.listaDM}" paginator="true" rows="5" 
+                               paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}" 
+                               rowsPerPageTemplate="5,10,15"       emptyMessage="Nada encontrado...">
+                        <p:column headerText="Nome">
+                            <h:outputText value="#{fun.nome}"/>
+                        </p:column>
+                        <p:column headerText="Login">
+                            <h:outputText value="#{fun.login}"/>
+                        </p:column>
+                        <p:column headerText="Telefone">
+                            <h:outputText value="#{fun.contato}"/>
+                        </p:column>                    
+                        <p:column headerText="Endereco">
+                            <h:outputText value="#{fun.endereco}"/>
+                        </p:column>
+                        <p:column headerText="Numero">
+                            <h:outputText value="#{fun.numero}"/>
+                        </p:column>
+                        <p:column headerText="Complemento">
+                            <h:outputText value="#{fun.complemento}"/>
+                        </p:column>
+                        <p:column headerText="Bairro">
+                            <h:outputText value="#{fun.bairro}"/>
+                        </p:column>
+                        <p:column headerText="Cidade">
+                            <h:outputText value="#{fun.cidade}"/>
+                        </p:column>
+                        <p:column headerText="Estado">
+                            <h:outputText value="#{fun.estado}"/>
+                        </p:column>
+                        <p:column headerText="Email">
+                            <h:outputText value="#{fun.email}"/>
+                        </p:column>
+                        <p:column headerText="Status" rendered="#{fun.ativo}">
+                            <h:outputText value="Ativo"/>
+                        </p:column>
+                        <p:column headerText="Status" rendered="#{!fun.ativo}">
+                            <h:outputText value="Inativo"/>
+                        </p:column>
+                        <p:column headerText="Opções">
+                            <p:commandButton value="Excluir"/>
+                            <p:commandButton value="Editar" actionListener="#{ControllerFuncionario.prepararAlterar()}" update=":formEditarFuncionario:fsalterar" onclick="dialogFuncionario.show();"/>
+                        </p:column>
+                    </p:dataTable>
+                </p:fieldset>
+
+            </h:form>
+                <h:form id="formEditarFuncionario">
+                <p:dialog id="dialogFuncionario" widgetVar="dialogFuncionario" >                
+                    <p:fieldset legend="Cadastro Funcionario" id="fsalterar" >
+                    <p:panelGrid columns="2" styleClass="semBorda">
+                        <p:panelGrid columns="2">
+                            <h:outputLabel value="Nome" for="nome"/>
+                            <p:inputText   value="#{controllerFuncionario.usuario.nome}" id="nome"/>                
+                            <h:outputLabel value="Login" for="login"/>
+                            <p:inputText   value="#{controllerFuncionario.usuario.login}" id="login"/>                
+                            <p:outputLabel value="Telefone" for="telefone"/>
+                            <p:inputMask mask="(99)9999-9999"   value="#{controllerFuncionario.usuario.contato}" id="telefone"/>                            
+                            <p:outputLabel value="Endereco" for="endereco"/>
+                            <p:inputText   value="#{controllerFuncionario.usuario.endereco}" id="endereco"/>                
+                            <p:outputLabel value="Numero" for="numero"/>
+                            <p:inputText   value="#{controllerFuncionario.usuario.numero}" id="numero"/>
+                        </p:panelGrid>
+                        <p:panelGrid columns="2">                        
+                            <p:outputLabel value="Complemento" for="complemento"/>
+                            <p:inputText   value="#{controllerFuncionario.usuario.complemento}" id="complemento"/>
+                            <p:outputLabel value="Bairro" for="bairro"/>
+                            <p:inputText   value="#{controllerFuncionario.usuario.bairro}" id="bairro"/>
+                            <p:outputLabel value="Cidade" for="cidade"/>
+                            <p:inputText   value="#{CcontrollerFuncionario.usuario.cidade}" id="cidade"/>
+                            <h:outputText value="Ativo"/>
+                            <p:selectBooleanButton value="#{controllerFuncionario.usuario.ativo}" onLabel="Sim" offLabel="Não" />
+                            <p:outputLabel value="Email"  for="email"/>
+                            <p:inputText   value="#{controllerFuncionario.usuario.email}" id="email"/>
+                        </p:panelGrid>
                     </p:panelGrid>
-                    
-                </p:panelGrid>
-            </p:fieldset>
-            </p:dialog>
-            
-        </h:form>
+                </p:fieldset>
+                </p:dialog>
+
+            </h:form>
+        </sec:ifAnyGranted>
     </ui:define>
 
 </ui:composition>
