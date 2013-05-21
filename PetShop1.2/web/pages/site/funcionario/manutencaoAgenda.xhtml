@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition template="../../../resources/templates/login.xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:sec="http://www.springframework.org/security/facelets/tags" >
+
+
+    <ui:define name="menu_horizontal">
+        <sec:ifAnyGranted roles="ROLE_ADMIN,ROLE_FUNC">
+            <ui:include src="/pages/site/funcionario/menu.xhtml" />
+        </sec:ifAnyGranted>
+    </ui:define>
+    
+    <ui:define name="corpo">
+        <style type="text/css">
+            .semBorda tr, .semBorda td {  
+                border: none !important;  
+            }
+        </style>
+        <sec:ifAnyGranted roles="ROLE_ADMIN,ROLE_FUNC">
+            <p:growl  autoUpdate="true" />
+            <h:form id="formCadastroAgenda">
+                <br/>
+                <p:fieldset legend="Lista de Serviços">
+                    <p:dataTable id="tabela" var="p" value="#{controllerAgenda.listaDM}" paginator="true" rows="5" 
+                           paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}" 
+                           rowsPerPageTemplate="5,10,15"       emptyMessage="Nada encontrado...">
+                        <p:column headerText="Usuário" filterBy="#{p.usuario.login}">
+                            <h:outputText  value="#{p.usuario.login}"/>
+                        </p:column>
+                        <p:column headerText="Serviço" filterBy="#{p.servico.tipo}">
+                            <h:outputText  value="#{p.servico.tipo}"/>
+                        </p:column>
+                        <p:column headerText="Dia" filterBy="#{p.dia}" >
+                            <h:outputText  value="#{p.dia}">
+                                <f:convertDateTime pattern="dd/MM/yyyy" />
+                            </h:outputText>
+                        </p:column>
+                        <p:column headerText="Hora" filterBy="#{p.hora}">
+                            <h:outputText  value="#{p.hora}"/>
+                        </p:column>
+                        <p:column headerText="Opções" style="width: 200px;">
+                            <p:commandButton value="Excluir" actionListener="#{controllerAgenda.remover()}" update="@form"/>
+                        </p:column>
+                    </p:dataTable>                  
+                </p:fieldset>
+            </h:form>
+        </sec:ifAnyGranted>
+    </ui:define>
+
+
+
+</ui:composition>
