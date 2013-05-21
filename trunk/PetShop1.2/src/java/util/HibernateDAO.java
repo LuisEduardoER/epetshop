@@ -1,6 +1,7 @@
 package util;
 import java.util.List;
 import org.hibernate.Session;
+import org.hibernate.criterion.Restrictions;
 
 public class HibernateDAO<T> implements InterfaceHibernateDAO<T> {
 
@@ -35,5 +36,14 @@ public class HibernateDAO<T> implements InterfaceHibernateDAO<T> {
     @Override
     public List<T> listar() {
         return this.sessao.createCriteria(classe).list();
+    }
+    ////////////////////////////////////////////////////////////////////////////
+    //Consultas personalizadas
+    
+    @Override
+    public List<T> buscaPersonalizada(String atributo,String nomeBuscado) {
+        return this.sessao.createCriteria(classe)
+                .add(Restrictions.eq(atributo,nomeBuscado))
+                .list();
     }
 }

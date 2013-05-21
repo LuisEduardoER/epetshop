@@ -5,6 +5,7 @@
 package mb;
 
 import beans.Agenda;
+import beans.Usuario;
 import java.awt.event.ActionEvent;
 import java.io.Serializable;
 import java.text.ParseException;
@@ -15,6 +16,7 @@ import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.SessionScoped;
+import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.faces.model.DataModel;
 import javax.faces.model.ListDataModel;
@@ -24,6 +26,7 @@ import org.primefaces.model.DefaultScheduleEvent;
 import org.primefaces.model.ScheduleEvent;
 import org.primefaces.model.ScheduleModel;
 import rn.AgendaRN;
+import rn.UsuarioRN;
 
 /**
  *
@@ -58,8 +61,16 @@ public class ScheduleController implements Serializable {
         return this.lista;
     }    
        
-    public void salvar() throws ParseException{       
+    public void salvar() throws ParseException{    
+        //peguei o login
+        ExternalContext fc = FacesContext.getCurrentInstance().getExternalContext();  
+        String login = fc.getRemoteUser();
+        //busquei obj usuario atraves do login
+        UsuarioRN rnu = new UsuarioRN();
+        List<Usuario> user = rnu.buscaPersonalizada("login", login);
+        
         AgendaRN rn = new AgendaRN();
+        getAgenda().setUsuario(user.get(0));
         getAgenda().setDia(event.getEndDate());
         getAgenda().setHora(event.getStartDate());
         rn.salvar(this.agenda);
