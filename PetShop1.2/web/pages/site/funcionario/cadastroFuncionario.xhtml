@@ -45,11 +45,12 @@ and open the template in the editor.
                                         requiredMessage="campo senha é obrigatório." style="width: 150px;"/>
                             <p:outputLabel value="Endereco" for="endereco"/>
                             <p:inputText   value="#{controllerFuncionario.usuario.endereco}" id="endereco"/> 
+                            <p:outputLabel value="Numero" for="numero"/>
+                            <p:inputText   value="#{controllerFuncionario.usuario.numero}" id="numero"/>
                         </p:panelGrid>
                         <p:panelGrid columns="2">
 
-                            <p:outputLabel value="Numero" for="numero"/>
-                            <p:inputText   value="#{controllerFuncionario.usuario.numero}" id="numero"/>
+                            
                             <p:outputLabel value="Complemento" for="complemento"/>
                             <p:inputText   value="#{controllerFuncionario.usuario.complemento}" id="complemento"/>
                             <p:outputLabel value="Bairro" for="bairro"/>
