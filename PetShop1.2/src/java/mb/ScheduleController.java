@@ -23,9 +23,11 @@ import javax.faces.model.ListDataModel;
 import org.primefaces.event.DateSelectEvent;
 import org.primefaces.event.SelectEvent;
 import org.primefaces.model.DefaultScheduleEvent;
+import org.primefaces.model.DefaultScheduleModel;
 import org.primefaces.model.ScheduleEvent;
 import org.primefaces.model.ScheduleModel;
 import rn.AgendaRN;
+import rn.ServicoRN;
 import rn.UsuarioRN;
 
 /**
@@ -40,7 +42,7 @@ public class ScheduleController implements Serializable {
     
     @ManagedProperty(value="#{agenda}")
     private Agenda agenda;
-
+    
     private List<Agenda> lista;
     
     private DataModel listaDataModel;
@@ -76,6 +78,22 @@ public class ScheduleController implements Serializable {
         rn.salvar(this.agenda);
         FacesContext context = FacesContext.getCurrentInstance();            
         context.addMessage(null, new FacesMessage("Cadastrado com Sucesso"));      
+    }
+    
+    public void pegar(){
+        eventModel = new DefaultScheduleModel(); 
+        getAgenda().setDia(event.getEndDate());
+        getAgenda().setHora(event.getStartDate());
+        ServicoRN rns = new ServicoRN();
+        //peguei o login
+        ExternalContext fc = FacesContext.getCurrentInstance().getExternalContext();  
+        String login = fc.getRemoteUser();
+        //busquei obj usuario atraves do login
+        UsuarioRN rnu = new UsuarioRN();
+        List<Usuario> user = rnu.buscaPersonalizada("login", login);
+        getAgenda().setUsuario(user.get(0));
+        getAgenda().setServico(rns.carregar(getAgenda().getServico().getId()));
+        eventModel.addEvent(new DefaultScheduleEvent(getAgenda().getServico().getTipo() +"\n"+getAgenda().getUsuario().getNome(), getAgenda().getDia(), getAgenda().getHora()));  
     }
     
     public void remover(){
@@ -137,41 +155,35 @@ public class ScheduleController implements Serializable {
       
     private ScheduleEvent event = new DefaultScheduleEvent();
   
-    //public ScheduleController() {  
-        /*eventModel = new DefaultScheduleModel();  
-        eventModel.addEvent(new DefaultScheduleEvent("Champions League Match", previousDay8Pm(), previousDay11Pm()));  
-        eventModel.addEvent(new DefaultScheduleEvent("Birthday Party", today1Pm(), today6Pm()));  
-        eventModel.addEvent(new DefaultScheduleEvent("Breakfast at Tiffanys", nextDay9Am(), nextDay11Am()));  
-        eventModel.addEvent(new DefaultScheduleEvent("Plant the new garden stuff", theDayAfter3Pm(), fourDaysLater3pm()));  */
-    //}  
+ /*
       
-    /*public Date getRandomDate(Date base) {  
+    public Date getRandomDate(Date base) {  
         Calendar date = Calendar.getInstance();  
         date.setTime(base);  
         date.add(Calendar.DATE, ((int) (Math.random()*30)) + 1);    //set random day of month  
           
         return date.getTime();  
-    }*/
-      
-    /*public Date getInitialDate() {  
+    }
+   */   
+    public Date getInitialDate() {  
         Calendar calendar = Calendar.getInstance();  
         calendar.set(calendar.get(Calendar.YEAR), Calendar.FEBRUARY, calendar.get(Calendar.DATE), 0, 0, 0);  
           
         return calendar.getTime();  
-    }  */
+    }  
       
     public ScheduleModel getEventModel() {  
         return eventModel;  
     }  
       
-    /*private Calendar today() {  
+    private Calendar today() {  
         Calendar calendar = Calendar.getInstance();  
         calendar.set(calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DATE), 0, 0, 0);  
   
         return calendar;  
-    }  */
+    }  
       
-    /*private Date previousDay8Pm() {  
+    private Date previousDay8Pm() {  
         Calendar t = (Calendar) today().clone();  
         t.set(Calendar.AM_PM, Calendar.PM);  
         t.set(Calendar.DATE, t.get(Calendar.DATE) - 1);  
@@ -239,7 +251,7 @@ public class ScheduleController implements Serializable {
         t.set(Calendar.HOUR, 3);  
           
         return t.getTime();  
-    }  */
+    }  
       
     public ScheduleEvent getEvent() {  
         return event;  
