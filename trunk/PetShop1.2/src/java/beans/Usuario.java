@@ -69,7 +69,7 @@ public class Usuario implements Serializable {
         @Temporal(javax.persistence.TemporalType.DATE)
         private Date data_cadastro;
         
-        @OneToMany(mappedBy="usuario")
+        @OneToMany(mappedBy="usuario",cascade= CascadeType.ALL,fetch= FetchType.LAZY)
         Set<UsuarioPermissao> permissoes;
         
         @OneToMany(mappedBy="usuario")
