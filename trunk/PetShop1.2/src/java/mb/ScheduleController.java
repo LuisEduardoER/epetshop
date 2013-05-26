@@ -9,9 +9,11 @@ import beans.Usuario;
 import java.awt.event.ActionEvent;
 import java.io.Serializable;
 import java.text.ParseException;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
@@ -77,7 +79,9 @@ public class ScheduleController implements Serializable {
         getAgenda().setHora(event.getStartDate());
         rn.salvar(this.agenda);
         FacesContext context = FacesContext.getCurrentInstance();            
-        context.addMessage(null, new FacesMessage("Cadastrado com Sucesso"));      
+        context.addMessage(null, new FacesMessage("Cadastrado com Sucesso"));     
+        
+        getListaAgenda();
     }
     
     public void pegar(){
@@ -116,6 +120,17 @@ public class ScheduleController implements Serializable {
         
     }
     
+    public void getListaAgenda(){
+        this.eventModel = new DefaultScheduleModel(); 
+        AgendaRN rn = new AgendaRN();
+        List<Agenda> lista2  = rn.listar();
+        if(lista2.size() >0){
+            for(Agenda a :lista2){
+                this.eventModel.addEvent(new DefaultScheduleEvent(a.getServico().getTipo() +"\n"+a.getUsuario().getNome(), a.getDia(), a.getDia(),a.getHora()));
+            }
+        }
+    }
+    
     public Calendar capturaDia(Date dia){
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(dia);
@@ -146,7 +161,7 @@ public class ScheduleController implements Serializable {
     
     
     public ScheduleController() {
-        
+       
     }
     
     ////////////////////////////////////////////////////////////////////////////
