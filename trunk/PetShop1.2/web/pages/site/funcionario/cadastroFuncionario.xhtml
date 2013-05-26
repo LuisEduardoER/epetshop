@@ -28,7 +28,7 @@ and open the template in the editor.
         
             <h:form id="formPrinc">
                 <p:growl id="growl"/>
-                <p:fieldset legend="Cadastro Funcionario">
+                <p:fieldset legend="Cadastro de Pessoas">
                     <p:panelGrid columns="3" styleClass="semBorda">
                         <p:panelGrid columns="2">
                             <h:outputLabel value="Nome" for="nome"/>
@@ -110,7 +110,7 @@ and open the template in the editor.
 
                 </p:fieldset>
                 <br/>
-                <p:fieldset legend="Funcionarios">
+                <p:fieldset legend="Manutenção de contas">
                     <p:dataTable id="tabela" var="fun" value="#{controllerFuncionario.listaDM}" paginator="true" rows="5" 
                                paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}" 
                                rowsPerPageTemplate="5,10,15"       emptyMessage="Nada encontrado...">
