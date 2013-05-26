@@ -29,7 +29,7 @@ and open the template in the editor.
             <h:form id="formPrinc">
                 <p:growl id="growl"/>
                 <p:fieldset legend="Cadastro Funcionario">
-                    <p:panelGrid columns="2" styleClass="semBorda">
+                    <p:panelGrid columns="3" styleClass="semBorda">
                         <p:panelGrid columns="2">
                             <h:outputLabel value="Nome" for="nome"/>
                             <p:inputText   value="#{controllerFuncionario.usuario.nome}" id="nome"/>                
@@ -56,10 +56,51 @@ and open the template in the editor.
                             <p:inputText   value="#{controllerFuncionario.usuario.bairro}" id="bairro"/>
                             <p:outputLabel value="Cidade" for="cidade"/>
                             <p:inputText   value="#{controllerFuncionario.usuario.cidade}" id="cidade"/>
-                            <h:outputText value="Ativo"/>
-                            <p:selectBooleanButton value="#{controllerFuncionario.usuario.ativo}" onLabel="Sim" offLabel="Não" />
+                            <p:outputLabel value="Estado" for="estado"/>
+                            <p:selectOneMenu value="#{controllerFuncionario.usuario.estado}" id="estado">
+                                <f:selectItem itemLabel="Selecione"/>
+                                <f:selectItem itemLabel="Acre" itemValue="AC"/>
+                                <f:selectItem itemLabel="Alagoas" itemValue="AL"/>
+                                <f:selectItem itemLabel="Amapá" itemValue="AP"/>
+                                <f:selectItem itemLabel="Amazonas" itemValue="AM"/>
+                                <f:selectItem itemLabel="Bahia" itemValue="BA"/>
+                                <f:selectItem itemLabel="Ceará" itemValue="CE"/>
+                                <f:selectItem itemLabel="Distrito Federal" itemValue="DF"/>
+                                <f:selectItem itemLabel="Espírito Santo" itemValue="ES"/>
+                                <f:selectItem itemLabel="Goiás" itemValue="GO"/>
+                                <f:selectItem itemLabel="Maranhão" itemValue="MA"/>
+                                <f:selectItem itemLabel="Mato Grosso" itemValue="MT"/>
+                                <f:selectItem itemLabel="Mato Grosso do Sul" itemValue="MS"/>
+                                <f:selectItem itemLabel="Minas Gerais" itemValue="MG"/>
+                                <f:selectItem itemLabel="Pará" itemValue="PA"/>
+                                <f:selectItem itemLabel="Paraíba" itemValue="PB"/>
+                                <f:selectItem itemLabel="Paraná" itemValue="PR"/>
+                                <f:selectItem itemLabel="Pernanbuco" itemValue="PE"/>
+                                <f:selectItem itemLabel="Piauí" itemValue="PI"/>
+                                <f:selectItem itemLabel="Rio de Janeiro" itemValue="RJ"/>
+                                <f:selectItem itemLabel="Rio Grande do Norte" itemValue="RN"/>
+                                <f:selectItem itemLabel="Rio Grande do Sul" itemValue="RS"/>
+                                <f:selectItem itemLabel="Rondônia" itemValue="RO"/>
+                                <f:selectItem itemLabel="Santa Catarina" itemValue="SC"/>
+                                <f:selectItem itemLabel="São Paulo" itemValue="SP"/>
+                                <f:selectItem itemLabel="Sergipe" itemValue="SE"/>
+                                <f:selectItem itemLabel="Tocantins" itemValue="TO"/>
+                            </p:selectOneMenu>
+                            <h:outputLabel value="Status" for="ativo"/>
+                            <p:selectBooleanButton id="ativo" value="#{controllerFuncionario.usuario.ativo}" onLabel="Sim" offLabel="Não" />
+                            <h:outputText value="Perfil"/>
+                            <p:selectOneMenu value="#{controllerFuncionario.controlPermissao}">
+                                <f:selectItem itemLabel="Selecione" />
+                                <f:selectItem itemLabel="Funcionario" itemValue="Funcionario"/>
+                                <f:selectItem itemLabel="Cliente"     itemValue="Cliente"/>
+                            </p:selectOneMenu>                                         
+                            
                             <p:outputLabel value="Email"  for="email"/>
                             <p:inputText   value="#{controllerFuncionario.usuario.email}" id="email"/>
+                        </p:panelGrid>
+                        
+                        <p:panelGrid columns="2">
+                            
                         </p:panelGrid>
                         
                     </p:panelGrid>

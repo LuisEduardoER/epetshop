@@ -36,7 +36,7 @@ public class ControllerFuncionario {
     private Usuario usuario;
     @ManagedProperty(value="#{usuario_permissao}")
     private UsuarioPermissao permissao;
-    
+    private String controlPermissao;
     private List<Usuario> listaUsuario;
     private List<UsuarioPermissao> listaPermissao;
     
@@ -51,7 +51,12 @@ public class ControllerFuncionario {
         try {
             if (this.usuario.getSenha().equals(this.usuario.getSenha2())) {
                 getPermissao().setUsuario(this.usuario);
-                getPermissao().setPermissao("ROLE_FUNC");
+               if(controlPermissao.equals("funcionario")){                   
+                getPermissao().setPermissao("ROLE_FUNC");   
+               }
+               else if(controlPermissao.equals("cliente")){
+                getPermissao().setPermissao("ROLE_CLI");      
+               }
                 getUsuario().setData_cadastro(new Date());
                 rn.salvar(this.usuario);
                 rn2.salvar(this.permissao);
@@ -144,6 +149,14 @@ public class ControllerFuncionario {
 
     public void setListaPermissao(List<UsuarioPermissao> listaPermissao) {
         this.listaPermissao = listaPermissao;
+    }
+
+    public String getControlPermissao() {
+        return controlPermissao;
+    }
+
+    public void setControlPermissao(String controlPermissao) {
+        this.controlPermissao = controlPermissao;
     }
     
 }
