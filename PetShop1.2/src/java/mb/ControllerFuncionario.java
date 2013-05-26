@@ -51,10 +51,10 @@ public class ControllerFuncionario {
         try {
             if (this.usuario.getSenha().equals(this.usuario.getSenha2())) {
                 getPermissao().setUsuario(this.usuario);
-               if(controlPermissao.equals("funcionario")){                   
+               if(controlPermissao.equals("Funcionario")){                   
                 getPermissao().setPermissao("ROLE_FUNC");   
                }
-               else if(controlPermissao.equals("cliente")){
+               else if(controlPermissao.equals("Cliente")){
                 getPermissao().setPermissao("ROLE_CLI");      
                }
                 getUsuario().setData_cadastro(new Date());
