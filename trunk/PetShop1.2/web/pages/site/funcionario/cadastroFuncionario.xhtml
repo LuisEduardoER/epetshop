@@ -26,7 +26,7 @@ and open the template in the editor.
         <br/>
         <sec:ifAnyGranted roles="ROLE_ADMIN,ROLE_FUNC">
         
-            <h:form>
+            <h:form id="formPrinc">
                 <p:growl id="growl"/>
                 <p:fieldset legend="Cadastro Funcionario">
                     <p:panelGrid columns="2" styleClass="semBorda">
@@ -61,7 +61,7 @@ and open the template in the editor.
                             <p:outputLabel value="Email"  for="email"/>
                             <p:inputText   value="#{controllerFuncionario.usuario.email}" id="email"/>
                         </p:panelGrid>
-
+                        
                     </p:panelGrid>
                     <br/>
                     <p:commandButton value="Cadastrar" actionListener="#{controllerFuncionario.cadastrar()}" update="@form" />
@@ -110,46 +110,47 @@ and open the template in the editor.
                             <h:outputText value="Inativo"/>
                         </p:column>
                         <p:column headerText="Opções">
-                            <p:commandButton value="Excluir"/>
-                            <p:commandButton value="Editar" actionListener="#{ControllerFuncionario.prepararAlterar()}" update=":formEditarFuncionario:fsalterar" onclick="dialogFuncionario.show();"/>
+                            <p:commandButton value="Excluir" actionListener="#{controllerFuncionario.excluir()}" update="@form" process="@this"/>
+                            <p:commandButton value="Editar" actionListener="#{controllerFuncionario.prepararAlterar()}" update=":formEditarFuncionario" process="@this" oncomplete="dialogFuncionario.show();"/>
                         </p:column>
                     </p:dataTable>
                 </p:fieldset>
 
             </h:form>
                 <h:form id="formEditarFuncionario">
-                <p:dialog id="dialogFuncionario" widgetVar="dialogFuncionario" >                
-                    <p:fieldset legend="Cadastro Funcionario" id="fsalterar" >
-                    <p:panelGrid columns="2" styleClass="semBorda">
-                        <p:panelGrid columns="2">
-                            <h:outputLabel value="Nome" for="nome"/>
-                            <p:inputText   value="#{controllerFuncionario.usuario.nome}" id="nome"/>                
-                            <h:outputLabel value="Login" for="login"/>
-                            <p:inputText   value="#{controllerFuncionario.usuario.login}" id="login"/>                
-                            <p:outputLabel value="Telefone" for="telefone"/>
-                            <p:inputMask mask="(99)9999-9999"   value="#{controllerFuncionario.usuario.contato}" id="telefone"/>                            
-                            <p:outputLabel value="Endereco" for="endereco"/>
-                            <p:inputText   value="#{controllerFuncionario.usuario.endereco}" id="endereco"/>                
-                            <p:outputLabel value="Numero" for="numero"/>
-                            <p:inputText   value="#{controllerFuncionario.usuario.numero}" id="numero"/>
-                        </p:panelGrid>
-                        <p:panelGrid columns="2">                        
-                            <p:outputLabel value="Complemento" for="complemento"/>
-                            <p:inputText   value="#{controllerFuncionario.usuario.complemento}" id="complemento"/>
-                            <p:outputLabel value="Bairro" for="bairro"/>
-                            <p:inputText   value="#{controllerFuncionario.usuario.bairro}" id="bairro"/>
-                            <p:outputLabel value="Cidade" for="cidade"/>
-                            <p:inputText   value="#{CcontrollerFuncionario.usuario.cidade}" id="cidade"/>
-                            <h:outputText value="Ativo"/>
-                            <p:selectBooleanButton value="#{controllerFuncionario.usuario.ativo}" onLabel="Sim" offLabel="Não" />
-                            <p:outputLabel value="Email"  for="email"/>
-                            <p:inputText   value="#{controllerFuncionario.usuario.email}" id="email"/>
-                        </p:panelGrid>
-                    </p:panelGrid>
-                </p:fieldset>
-                </p:dialog>
-
-            </h:form>
+                    <p:dialog id="dialogFuncionario" widgetVar="dialogFuncionario" modal="true" closable="false">                
+                        <p:fieldset legend="Cadastro Funcionario" id="fsalterar" >
+                            <p:panelGrid columns="2" styleClass="semBorda">
+                                <p:panelGrid columns="2">
+                                    <h:outputLabel value="Nome" for="nome"/>
+                                    <p:inputText   value="#{controllerFuncionario.usuario.nome}" id="nome"/>                
+                                    <h:outputLabel value="Login" for="login"/>
+                                    <p:inputText   value="#{controllerFuncionario.usuario.login}" id="login"/>                
+                                    <p:outputLabel value="Telefone" for="telefone"/>
+                                    <p:inputMask mask="(99)9999-9999"   value="#{controllerFuncionario.usuario.contato}" id="telefone"/>                            
+                                    <p:outputLabel value="Endereco" for="endereco"/>
+                                    <p:inputText   value="#{controllerFuncionario.usuario.endereco}" id="endereco"/>                
+                                    <p:outputLabel value="Numero" for="numero"/>
+                                    <p:inputText   value="#{controllerFuncionario.usuario.numero}" id="numero"/>
+                                </p:panelGrid>
+                                <p:panelGrid columns="2">                        
+                                    <p:outputLabel value="Complemento" for="complemento"/>
+                                    <p:inputText   value="#{controllerFuncionario.usuario.complemento}" id="complemento"/>
+                                    <p:outputLabel value="Bairro" for="bairro"/>
+                                    <p:inputText   value="#{controllerFuncionario.usuario.bairro}" id="bairro"/>
+                                    <p:outputLabel value="Cidade" for="cidade"/>
+                                    <p:inputText   value="#{controllerFuncionario.usuario.cidade}" id="cidade"/>
+                                    <h:outputText value="Ativo"/>
+                                    <p:selectBooleanButton value="#{controllerFuncionario.usuario.ativo}" onLabel="Sim" offLabel="Não" />
+                                    <p:outputLabel value="Email"  for="email"/>
+                                    <p:inputText   value="#{controllerFuncionario.usuario.email}" id="email"/>
+                                </p:panelGrid>
+                            </p:panelGrid>
+                            <p:commandButton value="Fechar" actionListener="#{controllerFuncionario.limpar()}" oncomplete="dialogFuncionario.hide();" update="@form"/>
+                            <p:commandButton value="Alterar" actionListener="#{controllerFuncionario.editar()}" update=":formPrinc" oncomplete="dialogFuncionario.hide();"/>
+                        </p:fieldset>
+                    </p:dialog>
+                </h:form>
         </sec:ifAnyGranted>
     </ui:define>
 
