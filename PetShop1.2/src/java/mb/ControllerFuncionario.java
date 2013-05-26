@@ -72,7 +72,9 @@ public class ControllerFuncionario {
     
     public void excluir(){
         UsuarioRN rn = new UsuarioRN();
+        this.usuario = (Usuario) this.listaDataModelUsuario.getRowData();
         rn.excluir(this.usuario);
+        limpar();
         FacesContext context = FacesContext.getCurrentInstance();          
         context.addMessage(null, new FacesMessage("Excluído com Sucesso"));
     }
@@ -80,6 +82,7 @@ public class ControllerFuncionario {
     public void editar(){
         UsuarioRN rn = new UsuarioRN();
         rn.atualizar(this.usuario);
+        limpar();
         FacesContext context = FacesContext.getCurrentInstance();          
         context.addMessage(null, new FacesMessage("Editado com Sucesso"));
     }
