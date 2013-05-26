@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition template="../../../resources/templates/login.xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:sec="http://www.springframework.org/security/facelets/tags" >
+
+
+    <ui:define name="menu_horizontal">
+        <sec:ifAnyGranted roles="ROLE_ADMIN,ROLE_FUNC">
+            <ui:include src="/pages/site/funcionario/menu.xhtml" />
+        </sec:ifAnyGranted>
+    </ui:define>
+    
+    <ui:define name="corpo">
+        <style type="text/css">
+            .semBorda tr, .semBorda td {  
+                border: none !important;  
+            }
+        </style>
+        <sec:ifAnyGranted roles="ROLE_ADMIN,ROLE_FUNC">
+
+            <p:panel style="border: none !important;">
+                <h:form enctype="multipart/form-data">
+                    <p:fieldset legend="Galeria de Imagens">
+                        <p:growl id="growl" showDetail="true" life="6000"/>
+                        <p:fileUpload fileUploadListener="#{controllerGaleria.handleFileUpload}" 
+                                      mode="advanced" auto="false" sizeLimit="1000000" multiple="true"
+                                      allowTypes="/(\.|\/)(gif|jpe?g|png)$/" update="growl :galeria"/>
+                        <br/>
+                    </p:fieldset>
+                </h:form>
+            </p:panel>
+            <center>
+                <p:panel style="border: none !important;">
+                    <p:galleria value="#{controllerGaleria.lista}" var="foto" id="galeria">
+                        <p:graphicImage value="../../../#{foto.foto}"/>
+                    </p:galleria>
+                </p:panel>
+            </center>
+            
+        </sec:ifAnyGranted>
+    </ui:define>
+
+
+
+</ui:composition>

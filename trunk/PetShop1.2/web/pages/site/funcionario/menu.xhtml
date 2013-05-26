@@ -18,7 +18,11 @@ and open the template in the editor.
             <p:menuitem value="Agendar" url="/pages/site/funcionario/scheduleAgenda.jsf"/>
             <p:menuitem value="Desmarcar" url="/pages/site/funcionario/manutencaoAgenda.jsf"/>
             
-        </p:submenu>     
+        </p:submenu>
+        <p:submenu label="Galeria" icon="ui-icon-image">
+            <p:menuitem value="Adicionar" url="/pages/site/funcionario/galeria.jsf" icon="ui-icon-plus" />
+            <p:menuitem value="Remover" url="/pages/site/funcionario/galeriaRemov.jsf" icon="ui-icon-minus" />
+        </p:submenu>
         
         <p:menuitem value="sair" url="/j_spring_security_logout" icon="ui-icon-close"/>
     </p:menubar>

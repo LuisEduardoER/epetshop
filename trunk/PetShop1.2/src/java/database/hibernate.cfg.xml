@@ -22,5 +22,6 @@
     <mapping class="beans.UsuarioPermissao"/>
     <mapping class="beans.Servico"/>
     <mapping class="beans.Agenda"/>
+    <mapping class="beans.Galeria"/>
   </session-factory>
 </hibernate-configuration>

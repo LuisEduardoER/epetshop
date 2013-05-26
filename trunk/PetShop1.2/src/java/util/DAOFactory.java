@@ -5,6 +5,7 @@
 package util;
 
 import beans.Agenda;
+import beans.Galeria;
 import beans.Servico;
 import beans.Usuario;
 import beans.UsuarioPermissao;
@@ -35,6 +36,12 @@ public class DAOFactory {
     
     public static InterfaceHibernateDAO<Servico> criarServicoDAO(){
         HibernateDAO<Servico> dao = new HibernateDAO<Servico>(Servico.class);
+        dao.setSession(HibernateUtil.getSessionFactory().getCurrentSession());
+        return dao;
+    }
+    
+    public static InterfaceHibernateDAO<Galeria> criarGaleriaDAO(){
+        HibernateDAO<Galeria> dao = new HibernateDAO<Galeria>(Galeria.class);
         dao.setSession(HibernateUtil.getSessionFactory().getCurrentSession());
         return dao;
     }
